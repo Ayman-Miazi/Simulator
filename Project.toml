@@ -1,0 +1,13 @@
+name = "SimulatorCore"
+uuid = "9368427e-3a1e-42fe-9d8d-7f6918327aac"
+authors = ["amia0004 <amia0004@student.monash.edu> and contributors"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1.10.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
