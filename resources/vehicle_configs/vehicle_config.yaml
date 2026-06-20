@@ -1,0 +1,31 @@
+ground_temperature:
+ground_pressure:  
+body_param:
+  reference_length: 
+  total_length: 
+files:
+  drag:
+  thrust_curve:
+  wind:
+cg:
+mass:
+lateral_cd: 1.2
+ballast_mass:
+initial_altitude:
+launch_rod_length:
+step_size:
+parachutes:
+- cd:
+  deploy:
+    at_altitude:
+    at_apogee:
+  diameter:
+  name: Drogue
+  unfurl_time:
+- cd:
+  deploy:
+    at_altitude:
+    at_apogee:
+  diameter:
+  name: Main
+  unfurl_time:

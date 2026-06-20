@@ -1,0 +1,10 @@
+altitude (m AGL),velocity (m/s),bearing (degrees clockwise from true north)
+0,1,315
+100,1,315
+600,1,180
+750,2,160
+900,2,100
+1500,2,90
+2000,1,135
+3000,3,90
+4200,7,90

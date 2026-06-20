@@ -1,9 +1,17 @@
 name = "SimulatorCore"
 uuid = "9368427e-3a1e-42fe-9d8d-7f6918327aac"
-authors = ["amia0004 <amia0004@student.monash.edu> and contributors"]
 version = "1.0.0-DEV"
+authors = ["amia0004 <amia0004@student.monash.edu> and contributors"]
+
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+SimulatorInterfaces = "dc20bacb-09a5-4257-a3e7-0618f31cbd62"
 
 [compat]
+CSV = "0.10.16"
+DataFrames = "1.8.2"
+SimulatorInterfaces = "1.0.0"
 julia = "1.10.10"
 
 [extras]
