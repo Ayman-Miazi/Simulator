@@ -1,0 +1,36 @@
+[models]
+aerodynamics = "naive_drag"
+atmosphere = "isa"
+gravity = "naive_gravity"
+propulsion = "thrust_curve"
+wind = "wind_profile"
+
+[aerodynamics]
+path = "/resources/drag_data/drag_data.csv"
+
+[atmosphere]
+ground_temperature = 288.15
+ground_pressure = 101325.0
+
+[gravity]
+surface_gravity = 9.81
+
+[propulsion]
+path = "/resources/thrust_data/thrust_data.csv"
+
+[wind]
+path = "/resources/wind_data/wind_data.csv"
+
+[simulation_conditions]
+initial_altitude = 0.0
+initial_euler_angles = [0.0, 90.0, 0.0]
+initial_latitude = 0.0
+initial_longitude = 0.0
+time_step = 0.01
+launch_rod_length = 1.0
+
+[rocket]
+frame_mass = 50.0
+total_length = 2.0
+reference_length = 0.5
+frame_cg = -1
