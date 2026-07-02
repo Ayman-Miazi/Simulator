@@ -1,0 +1,29 @@
+conditions:
+  initial_conditions:
+    altitude: 0
+    latitude: 0
+    longitude: 0
+    speed: 0
+    angular_velocity: [0, 0, 0]
+
+  launch_rod:
+    altitude: 87
+    azimuth: 0
+    length: 5
+    
+  settings:
+    stopping_at:
+      apogee: False
+      landing: True
+      time: 1000
+    timestep: 0.01
+    integrator_ascent: rk4
+    integrator_descent: rk4
+    interpolator: linear
+    dof: 6
+
+vehicles:
+  - type: rocket
+    config: vehicle_config
+    position_offset: [0, 0, 0]
+    rotation_offset: [0, 0, 0]

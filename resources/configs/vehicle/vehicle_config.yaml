@@ -1,0 +1,48 @@
+vehicle_parameters:
+  name: Vehicle
+  total_length: 1.0
+  reference_length: 1.0
+  frame_mass: 1.0
+  frame_cg: 0.5
+
+models:
+  atmosphere:
+    type:
+    config:
+  
+  wind:
+    type:
+    config:
+  
+  gravity:
+    type:
+    config:
+
+  aerodynamics:
+    type:
+    config:
+
+  motors:
+    - type:
+      config:
+      position_offset: [0, 0, 0]
+      rotation_offset: [0, 0, 0]
+    
+  force_effectors:
+    - type:
+      config:
+      position_offset: [0, 0, 0]
+      rotation_offset: [0, 0, 0]
+  
+  control_systems:
+    - type:
+      algorithm:
+      config:
+
+  parachutes:
+    - type:
+      deploy_at:
+        altitude:
+        apogee:
+        time:
+      config:

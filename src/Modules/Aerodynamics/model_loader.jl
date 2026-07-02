@@ -4,5 +4,5 @@ include("barrowman.jl")
 
 function load_aerodynamic_model(name::String, config::Dict{String, Any})
     
-    return construct_aerodynamic_model(Val(Symbol(name)), config)
+    return construct_aerodynamic_model(Val(NaiveDrag), config)
 end

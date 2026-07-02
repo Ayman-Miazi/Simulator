@@ -1,0 +1,41 @@
+[models]
+aerodynamics = "NaiveDrag"
+atmosphere = "StandardAtmo"
+gravity = "NaiveGravity"
+propulsion = "ThrustCurve"
+wind = "WindProfile"
+
+[aerodynamics]
+path = "/resources/drag_data/drag_data.csv"
+lateral_cd = 1.2
+
+[atmosphere]
+ground_temperature = 288.15
+ground_pressure = 101325.0
+
+[gravity]
+
+[propulsion]
+path = "/resources/thrust_curves/AeroTech_HP-L1000W.eng"
+
+[wind]
+path = "/resources/weather_profile/weather_profile.csv"
+
+[simulation_conditions]
+initial_altitude = 0.0
+initial_euler_angles = [0.0, 90.0, 0.0]
+initial_latitude = 0.0
+initial_longitude = 0.0
+time_step = 0.1
+launch_rod_length = 5.0
+
+[rocket]
+frame_mass = 15.0
+total_length = 1.65
+reference_length = 0.1016
+frame_cg = -0.966
+
+[parachute]
+[parachute.drogue]
+
+[parachute.main]
