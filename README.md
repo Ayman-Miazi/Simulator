@@ -1,3 +1,3 @@
-# SimulatorCore
+# Simulator
 
-[![Build Status](https://github.com/AymanMiazi/SimulatorCore.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/AymanMiazi/SimulatorCore.jl/actions/workflows/CI.yml?query=branch%3Amain)
+A custom 6-degree-of-freedome rigid body simulator coded in Julia following the methodology outlined in the book by Peter H. Zipfel
