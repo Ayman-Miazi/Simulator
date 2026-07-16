@@ -1,52 +1,108 @@
+using StaticArrays
+
 module Transformations
-    # Make more efficient by using StaticArrays.jl and by precomputing the trigonometric functions
-    T_D_G(del::Real) = [cos(del)  0 sin(del); 
-                        0         1 0       ; 
-                        -sin(del) 0 cos(del)]
+
+# MAKE A GENERIC TRANSFORMATION MATRIX FUNCTION THAT I CAN PUT SPECIFIC TYPES INTO TO CONVERT THEM
+    T_G_I(del::Real, latitude::Real, Longitude::Real) = begin
+        return T_D_G(del) \ T_D_I(latitude, Longitude)
+    end
+
+    T_D_G(del::Real) = begin
+        # MAKE THIS FUNCTION TAKE IN HEIGHT
+        cos_del = cos(del)
+        sin_del = sin(del)
+
+        return SA[ cos_del 0 sin_del; 
+                   0       1 0      ; 
+                  -sin_del 0 cos_del]
+    end
     
-    T_D_E(latitude::Real, longitude::Real) = [-sin(latitude)*cos(longitude) -sin(latitude)*sin(longitude) cos(latitude) ; 
-                                              -sin(longitude)               cos(longitude)                0             ; 
-                                              -cos(latitude)*cos(longitude) -cos(latitude)*sin(longitude) -sin(latitude)]
+    T_D_E(latitude::Real, longitude::Real) = begin
+        sin_lat = sin(latitude)
+        cos_lat = cos(latitude)
+        sin_lon = sin(longitude)
+        cos_lon = cos(longitude)
 
-    T_D_I(latitude::Real, longitude::Real) = [-sin(latitude)*cos(longitude) -sin(latitude)*sin(longitude) cos(latitude) ; 
-                                              -sin(longitude)               cos(longitude)                0             ; 
-                                              -cos(latitude)*cos(longitude) -cos(latitude)*sin(longitude) -sin(latitude)]
+        return SA[-sin_lat*cos_lon -sin_lat*sin_lon  cos_lat; 
+                  -sin_lon          cos_lon          0      ; 
+                  -cos_lat*cos_lon -cos_lat*sin_lon -sin_lat]
+    end
 
-    T_W_B(roll::Real, aoa::Real) = [cos(aoa)  sin(aoa)*sin(roll) sin(aoa)*cos(roll); 
-                                    0         cos(roll)          -sin(roll)        ; 
-                                    -sin(aoa) cos(aoa)*sin(roll) cos(aoa)*cos(roll)]
+    T_D_I(latitude::Real, longitude::Real) = begin 
+        sin_lat = sin(latitude)
+        cos_lat = cos(latitude)
+        sin_lon = sin(longitude)
+        cos_lon = cos(longitude)
 
-    T_B_D(pitch::Real, yaw::Real, roll::Real) = [cos(pitch)*cos(yaw)           cos(pitch)*sin(yaw)            -sin(pitch)         ;
-                                                 sin(roll)*sin(pitch)*cos(yaw) -sin(roll)*sin(pitch)*sin(yaw) sin(roll)*cos(pitch);
-                                                 cos(roll)*sin(pitch)*cos(yaw) -cos(roll)*sin(pitch)*sin(yaw) cos(roll)*cos(pitch)]
+        return SA[-sin_lat*cos_lon -sin_lat*sin_lon  cos_lat ; 
+                  -sin_lon          cos_lon          0       ; 
+                  -cos_lat*cos_lon -cos_lat*sin_lon -sin_lat ]
+    end
 
-    Rot_X(theta::Real) = [1 0          0          ; 
-                          0 cos(theta) -sin(theta); 
-                          0 sin(theta) cos(theta) ]
+    T_W_B(roll::Real, aoa::Real) = begin 
+        cos_aoa = cos(aoa)
+        sin_aoa = sin(aoa)
+        cos_roll = cos(roll)
+        sin_roll = sin(roll)
+        
+        return SA[ cos_aoa  sin_aoa*sin_roll  sin_aoa*cos_roll; 
+                   0        cos_roll         -sin_roll        ; 
+                  -sin_aoa cos_aoa*sin_roll   cos_aoa*cos_roll]
+    end
 
-    Rot_Y(theta::Real) = [cos(theta)  0 sin(theta); 
-                          0           1 0         ; 
-                          -sin(theta) 0 cos(theta)]
+    T_B_D(pitch::Real, yaw::Real, roll::Real) = begin 
+        cos_pitch = cos(pitch)
+        sin_pitch = sin(pitch)
+        cos_yaw = cos(yaw)
+        sin_yaw = sin(yaw)
+        cos_roll = cos(roll)
+        sin_roll = sin(roll)
 
-    Rot_Z(theta::Real) = [cos(theta) -sin(theta) 0; 
-                          sin(theta) cos(theta)  0; 
-                          0          0           1]
+        return SA[cos_pitch*cos_yaw           cos_pitch*sin_yaw           -sin_pitch         ;
+                  sin_roll*sin_pitch*cos_yaw -sin_roll*sin_pitch*sin_yaw   sin_roll*cos_pitch;
+                  cos_roll*sin_pitch*cos_yaw -cos_roll*sin_pitch*sin_yaw   cos_roll*cos_pitch]
+    end
 
-    Ref_XY() = [0 1 0; 
-                1 0 0; 
-                0 0 1]
+    Rot_X(theta::Real) = begin 
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
 
-    Ref_YZ() = [1 0 0; 
-                0 0 1; 
-                0 1 0]  
-    
-    Ref_ZX() = [0 0 1; 
-                0 1 0; 
-                1 0 0]
+        return SA[1 0          0        ; 
+                  0 cos_theta -sin_theta; 
+                  0 sin_theta  cos_theta]
+    end
 
-    skew_symmetric(v::AbstractVector{<:Real}) = [0     -v[3] v[2] ; 
-                                                 v[3]  0     -v[1]; 
-                                                 -v[2] v[1]  0    ]
+    Rot_Y(theta::Real) = begin
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
+        return SA[ cos_theta 0 sin_theta; 
+                   0         1 0        ; 
+                  -sin_theta 0 cos_theta]
+    end
 
-    skew_reduction
+    Rot_Z(theta::Real) = begin
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
+        return SA[cos_theta -sin_theta 0; 
+                  sin_theta  cos_theta 0; 
+                  0          0         1]
+    end
+
+    Ref_XY() = begin
+        return SA[0 1 0; 
+                  1 0 0; 
+                  0 0 1]
+    end
+
+    Ref_YZ() = begin
+        return SA[1 0 0; 
+                  0 0 1; 
+                  0 1 0]  
+    end
+
+    Ref_ZX() = begin
+        return SA[0 0 1; 
+                  0 1 0; 
+                  1 0 0]
+    end
 end

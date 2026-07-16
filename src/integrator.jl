@@ -1,23 +1,14 @@
-abstract type Integrator end
+struct EulerIntegrator <: AbstractIntegrator end
+struct RK4Integrator <: AbstractIntegrator end
 
-struct EulerIntegrator <: Integrator 
+function integrate_step(::EulerIntegrator, ode::Function, rocket::Rocket, dt::T <: Real)
+    return rocket.state + ode(rocket, 0, 0) * dt
 end
 
-struct RK4Integrator <: Integrator 
-end
-
-integrate(integrator::Integrator, state::State, dt::Float64) = error("integrate not implemented for $(typeof(integrator))")
-
-function integrate_euler(state::State, acceleration::Tuple{Float64, Float64, Float64}, angular_acceleration::Tuple{Float64, Float64, Float64}, dt::Float64)
-    state.time = state.time .+ dt
-    state.position = state.position .+ state.velocity .* dt
-    state.rotation = state.rotation
-    state.velocity = state.velocity .+ acceleration .* dt
-    state.angular_velocity = state.angular_velocity .+ angular_acceleration .* dt
-    state.motor_mass = state.motor_mass .+ get_mass_flow(state, propulsion) .* dt
-    state.cg = calculate_cg(rocket, propulsion)
-end
-
-function integrate(::RK4Integrator, state::State, dt::Float64)
-
+function integrate_step(::RK4Integrator, ode::Function, rocket::Rocket, dt::T <: Real)
+    k1 = ode(rocket, 0)
+    k2 = ode(rocket, k1 * dt / 2)
+    k3 = ode(rocket, k2 * dt / 2)
+    k4 = ode(rocket, k3 * dt, dt)
+    return rocket.state + (k1 + 2k2 + 2k3 + k4) * dt / 6
 end

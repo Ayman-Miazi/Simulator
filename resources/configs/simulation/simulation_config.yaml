@@ -1,4 +1,4 @@
-conditions:
+simulation_parameters:
   initial_conditions:
     altitude: 0
     latitude: 0
@@ -24,6 +24,7 @@ conditions:
 
 vehicles:
   - type: rocket
+    separation_type: null
     config: vehicle_config
     position_offset: [0, 0, 0]
     rotation_offset: [0, 0, 0]
