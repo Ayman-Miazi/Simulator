@@ -11,7 +11,7 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 SimulatorInterfaces = "dc20bacb-09a5-4257-a3e7-0618f31cbd62"
 
 [compat]
-CSV = "0.10.16"
+CSV = "0.10.16, 1.1"
 DataFrames = "1.8.2"
 Interpolations = "0.16.3"
 Plots = "1.41.6"
